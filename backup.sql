@@ -5,7 +5,8 @@
 --   Dimension層: dim_customers, dim_products
 --   Fact層: fact_orders, fact_payments, fact_web_logs
 --   Gold層: gold_sns_mentions_analyzed, gold_voice_logs, gold_ad_creative_analysis,
---           gold_faq_documents, gold_operation_manuals, gold_sns_mentions_with_product_master
+--           gold_faq_documents, gold_operation_manuals, gold_sns_mentions_with_product_master,
+--           gold_supplier_product_mapping
 
 -- 使用するスキーマを設定
 USE SCHEMA GLACIERSTYLE_DB.EC_ANALYTICS_SCHEMA;
@@ -32,7 +33,7 @@ CREATE OR REPLACE STAGE BACKUP_STAGE
 -- ============================================================================
 COPY FILES 
   INTO @GLACIERSTYLE_DB.EC_ANALYTICS_SCHEMA.BACKUP_STAGE
-  FROM @GIT_INTEGRATION_FOR_HANDSON/branches/tmp_new_version_2026/backup/;
+  FROM @GIT_INTEGRATION_FOR_HANDSON/branches/main_v2/backup/;
 
 -- ============================================================================
 -- 3. エクスポート結果の確認
@@ -334,5 +335,21 @@ CREATE OR REPLACE TABLE gold_sns_mentions_with_product_master (
 
 COPY INTO GLACIERSTYLE_DB.EC_ANALYTICS_SCHEMA.gold_sns_mentions_with_product_master
 FROM @BACKUP_STAGE/gold_sns_mentions_with_product_master/
+FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' COMPRESSION = GZIP SKIP_HEADER = 1)
+ON_ERROR = 'CONTINUE';
+
+-- gold_supplier_product_mapping
+CREATE OR REPLACE TABLE gold_supplier_product_mapping (
+    SUPPLIER_PRODUCT_ID VARCHAR,
+    SUPPLIER_PRODUCT_NAME VARCHAR,
+    SUPPLIER_NAME VARCHAR,
+    MATCHED_PRODUCT_ID VARCHAR,
+    MATCHED_PRODUCT_NAME VARCHAR,
+    MATCH_SCORE FLOAT,
+    MATCH_METHOD VARCHAR
+);
+
+COPY INTO GLACIERSTYLE_DB.EC_ANALYTICS_SCHEMA.gold_supplier_product_mapping
+FROM @BACKUP_STAGE/gold_supplier_product_mapping/
 FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' COMPRESSION = GZIP SKIP_HEADER = 1)
 ON_ERROR = 'CONTINUE';

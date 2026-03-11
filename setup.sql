@@ -16,7 +16,7 @@ Snowflake EC Analytics - 環境セットアップスクリプト
 7. Snowflake Intelligence オブジェクトの作成
 
 【データソース】
-GitHub Repository: https://github.com/snow-jp-handson-org/cortex-handson-jp
+GitHub Repository: https://github.com/sfc-gh-dmiyagawa/cortex-handson-jp
 
 【実行方法】
 このスクリプト全体を選択してSnowflakeで実行してください。
@@ -79,13 +79,13 @@ SELECT '【Step 3】データステージの作成が完了しました' AS stat
 -- GitHubからデータを取得するためのAPI統合を作成
 CREATE OR REPLACE API INTEGRATION git_api_integration
   API_PROVIDER = git_https_api
-  API_ALLOWED_PREFIXES = ('https://github.com/snow-jp-handson-org/')
+  API_ALLOWED_PREFIXES = ('https://github.com/sfc-gh-dmiyagawa/')
   ENABLED = TRUE;
 
 -- Gitリポジトリとの統合を作成
 CREATE OR REPLACE GIT REPOSITORY GIT_INTEGRATION_FOR_HANDSON
   API_INTEGRATION = git_api_integration
-  ORIGIN = 'https://github.com/snow-jp-handson-org/cortex-handson-jp.git';
+  ORIGIN = 'https://github.com/sfc-gh-dmiyagawa/cortex-handson-jp.git';
 
 SELECT '【Step 4】GitHub連携の設定が完了しました' AS status;
 
