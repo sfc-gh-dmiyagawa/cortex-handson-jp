@@ -29,7 +29,7 @@ GitHub Repository: https://github.com/sfc-gh-dmiyagawa/cortex-handson-jp
 約3〜5分
 
 【次のステップ】
-セットアップ完了後、part1_data_ingest_4h.ipynb でデータのインポートを実行してください。
+セットアップ完了後、part1_data_ingest.ipynb でデータのインポートを実行してください。
 
 ================================================================================
 */
@@ -509,7 +509,7 @@ SELECT '
   セマンティックビュー: ec_analysis_semantic_view
 
 【次のステップ】
-part1_data_ingest_4h.ipynb を開いてデータのインポートを実行してください。
+part1_data_ingest.ipynb を開いてデータのインポートを実行してください。
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ' AS setup_complete;
